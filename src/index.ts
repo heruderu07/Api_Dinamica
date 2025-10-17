@@ -1,5 +1,5 @@
 import express from "express";
-import customerRouter from "./routes/customer";
+import customerRouter from "./routes/route_customer";
  
 require("dotenv").config(); 
 const cors = require("cors"); 
