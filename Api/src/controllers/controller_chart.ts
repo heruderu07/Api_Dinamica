@@ -27,14 +27,14 @@ export async function getChartData(req: Request, res: Response) {
             formatedDataRecords = dataRecords.map((retrievedData) => ({
                 data: retrievedData.create_date.toISOString().split("T")[0],
                 high: retrievedData.high,
-                low: retrievedData.low,
+                low: retrievedData.low
             }));
             break;
 
             case "pie":
                 formatedDataRecords = dataRecords.map((retrievedData) => ({
                 label: retrievedData.create_date.toISOString().split("T")[0],
-                value: retrievedData.high - retrievedData.low, 
+                value: retrievedData.volume, 
                 }));
                 break
                 

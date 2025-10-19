@@ -11,7 +11,7 @@ const formatDateForInput = (date: Date): string => {
 };
 
 export function ChartPage() {
-    const [chartType, setChartType] = useState<"bar" | "line">("line");
+    const [chartType, setChartType] = useState<"bar" | "line" | "pie">("line"); //pie
 
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 3600 * 1000);
     const today = new Date();
@@ -35,9 +35,10 @@ export function ChartPage() {
                 {}
                 <select
                     value={chartType}
-                    onChange={(e) => setChartType(e.target.value as "bar" | "line")} >
+                    onChange={(e) => setChartType(e.target.value as "bar" | "line" | "pie")} >
                     <option value="line">Gráfico de Linha</option>
                     <option value="bar">Gráfico de Barras</option>
+                    <option value="pie">Gráfico de Pizza</option>
                 </select>
 
                 {/* Seletor de Data Inicial */}
