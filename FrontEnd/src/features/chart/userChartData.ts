@@ -31,7 +31,7 @@ export function useChartData(
           formatDate(startDate),
           formatDate(endDate)
         );
-        console.log("Dados recebidos da API:", result);
+        console.log("Dados recebidos da API:", result); //Testando recebimento de dados da api
 
         const rawDataArray = result.dataRecords;
 
@@ -39,31 +39,31 @@ export function useChartData(
           const formattedData = rawDataArray.map((record: any) => {
             if (chartType === "pie") {
               return {
-                label: record.label,        // recebido do backend
-                value: record.value,        // volume
-                high: 0,                    // não utilizado
+                label: record.label,        
+                value: record.value,        
+                high: 0,                    
                 low: 0,
-                volume: record.value        // usado pelo gráfico de pizza
+                volume: record.value        
               };
             } else {
               return {
-                label: record.data,         // recebido do backend
+                label: record.data,         
                 value: record.high,
                 high: record.high,
                 low: record.low,
-                volume: 0                   // não utilizado nesse caso
+                volume: 0                   
               };
             }
           });
 
           setData(formattedData);
         } else {
-          console.error("A chave 'dataRecords' não contém um array:", rawDataArray);
-          setError("Formato de dados inesperado recebido da API.");
+          console.error("The key 'dataRecords' does not contain an array:", rawDataArray);
+          setError("Unexpected data format received from the API.");
         }
       } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-        setError("Erro ao carregar os dados. Tente novamente mais tarde.");
+        console.error("Error fetching data:", error);
+        setError("Error loading data. Please try again later.");
       } finally {
         setLoading(false);
       }

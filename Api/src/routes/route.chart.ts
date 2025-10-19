@@ -1,5 +1,5 @@
 import express from "express";
-import { getChartData } from "@/controllers/controller_chart" ;
+import { getChartData } from "@/controllers/controller.chart" ;
 
 
 const chartRouter = express.Router()
