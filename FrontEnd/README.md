@@ -1,58 +1,51 @@
-# API Dinâmica - USD_BRL
 
-Repositório para o backend da API que realiza CRUD do modelo USD_BRL e fornece dados para gráficos.
+---
+
+### README do Front-end (`dashboard`)
+
+```markdown
+# Dashboard - Front-end
+
+Frontend da aplicação que consome a API para exibir dados de USD_BRL e gráficos interativos.
 
 ## Tecnologias
 
-- Node.js
+- React 19
 - TypeScript
-- Express
-- Prisma ORM
-- MySQL (via mysql2)
-- Swagger (documentação API)
-- Jest (testes)
-- ts-node-dev (desenvolvimento)
-- dotenv (variáveis de ambiente)
+- Vite (build e dev server)
+- Axios (consumo API)
+- Chart.js + react-chartjs-2 (gráficos)
+- ESLint (linting)
 
 ## Scripts
 
-| Script         | Descrição                                |
-| -------------- | -------------------------------------- |
-| `npm run dev`  | Executa a API em modo desenvolvimento   |
-| `npm test`     | Executa os testes com Jest              |
+| Script          | Descrição                             |
+| --------------- | ----------------------------------- |
+| `npm run dev`   | Inicia servidor de desenvolvimento   |
 
-## Como rodar a API localmente
 
-1. Clone o repositório e acesse a pasta da API:
+
+
+## Como rodar localmente
+
+1. Clone o repositório e acesse a pasta do front-end:
    ```bash
    git clone https://github.com/heruderu07/Api_Dinamica.git
-   cd Api_Dinamica/api
+   cd Api_Dinamica/Frontend
 
 2. Instale as dependências:
    ```bash
    npm install
 
-3. Configure seu banco de dados e ajuste o arquivo .env.example alterando seu nome para .env e fornecendo as variáveis de ambiente
-
-4. Gere o Prisma Client:
-   ```bash
-   npx prisma generate
-
-5. Execute a API em modo de desenvolvimento:
+3. Inicie o servidor em modo de desenvolvimento:
    ```bash
    npm run dev
 
-6. Acesse a documentação do Swagger da API:
+4. Abra o navegador:
    ```bash
-   http://localhost:8000/api-docs
+   http://localhost:5173
 
-## Estrutura da API
-- Endpoints para CRUD do modelo USD_BRL(/usd_brl)
-- Endpoints para dados de gráficos (/chart/{chartType})
-- Validações e tratamentos de erros com respostas claras
+## Funcionalidades
+- Gera gráficos dinâmicos do tipo: Linha | Barra | Pizza
+- Interface reativa e responsiva feita com React
 
-## Testes
-- Os testes são feitos com Jest
-- Para rodar os testes:
-   ```bash
-   npm test
