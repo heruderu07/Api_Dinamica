@@ -40,7 +40,7 @@ export async function getChartData(req: Request, res: Response) {
       return res.status(200).json({
         type: chartType,
         dataRecords: [],
-        message: "Nenhum registro encontrado para o período especificado.",
+        message: "No records found for the specified periodo.",
       });
     }
 

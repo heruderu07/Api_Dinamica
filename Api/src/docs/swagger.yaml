@@ -1,0 +1,266 @@
+openapi: 3.0.3
+info:
+  title: API USD_BRL e Chart
+  description: API para CRUD do modelo USD_BRL e geração de dados para gráficos
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8000/api/v1
+
+paths:
+
+  /usd_brl:
+    post:
+      summary: Cria um novo registro USD_BRL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/USD_BRLCreate'
+            example:
+              create_date: "2025-10-19T00:00:00.000Z"
+              high: 5.10
+              low: 4.90
+              volume: 1000.5
+      responses:
+        '201':
+          description: Registro criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/USD_BRL'
+        '400':
+          description: Dados inválidos ou incompletos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Já existe um registro para a data informada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno no servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    get:
+      summary: Lista todos os registros USD_BRL
+      responses:
+        '200':
+          description: Lista de registros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/USD_BRL'
+        '500':
+          description: Erro ao buscar os registros
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /usd_brl/{id}:
+    get:
+      summary: Busca um registro USD_BRL pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do registro
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Registro encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/USD_BRL'
+        '400':
+          description: ID inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Registro não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro ao buscar o registro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Remove um registro USD_BRL pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do registro a ser deletado
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Registro removido com sucesso
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Record of 2025-10-19T00:00:00.000Z successfully deleted."
+        '400':
+          description: ID inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Registro não encontrado para deleção
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro ao deletar o registro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /chart/{chartType}:
+    get:
+      summary: Obtém dados para gráficos (line, bar, pie)
+      parameters:
+        - name: chartType
+          in: path
+          required: true
+          description: Tipo do gráfico (line, bar ou pie)
+          schema:
+            type: string
+            enum: [line, bar, pie]
+        - name: startDate
+          in: query
+          required: true
+          description: Data de início (formato ISO 8601)
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: Data de fim (formato ISO 8601)
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Dados formatados para gráfico
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum: [line, bar, pie]
+                  dataRecords:
+                    type: array
+                    items:
+                      type: object
+                      description: Dados do gráfico (depende do serviço)
+                  message:
+                    type: string
+                    nullable: true
+              example:
+                type: "line"
+                dataRecords:
+                  - x: "2025-10-19"
+                    y: 5.1
+                message: "Nenhum registro encontrado para o período especificado."
+        '400':
+          description: Parâmetros inválidos ou ausentes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno no servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    USD_BRL:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        create_date:
+          type: string
+          format: date-time
+          example: "2025-10-19T00:00:00.000Z"
+        high:
+          type: number
+          format: float
+          example: 5.10
+        low:
+          type: number
+          format: float
+          example: 4.90
+        volume:
+          type: number
+          format: float
+          example: 1000.5
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-10-19T10:20:30Z"
+
+    USD_BRLCreate:
+      type: object
+      required:
+        - create_date
+        - high
+        - low
+        - volume
+      properties:
+        create_date:
+          type: string
+          format: date-time
+          example: "2025-10-19T00:00:00.000Z"
+        high:
+          type: number
+          format: float
+          example: 5.10
+        low:
+          type: number
+          format: float
+          example: 4.90
+        volume:
+          type: number
+          format: float
+          example: 1000.5
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Mensagem de erro explicativa"
