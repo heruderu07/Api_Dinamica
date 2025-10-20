@@ -1,9 +1,3 @@
-
----
-
-### README do Front-end (`dashboard`)
-
-```markdown
 # Dashboard - Front-end
 
 Frontend da aplicação que consome a API para exibir dados de USD_BRL e gráficos interativos.
