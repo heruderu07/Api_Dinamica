@@ -1,0 +1,27 @@
+services:
+  backend:
+    image: myapi
+    container_name: backend
+    environment:
+      DATABASE_URL:
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
+  frontend:
+    image: frontend
+    container_name: frontend
+    ports:
+      - "5137:80"
+    environment:
+      - VITE_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
